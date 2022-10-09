@@ -24,30 +24,24 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.internal.dependency
+package io.spine.internal.gradle.dokka
 
-// https://github.com/protocolbuffers/protobuf
-@Suppress("MemberVisibilityCanBePrivate") // used directly from outside
-object Protobuf {
-    private const val group = "com.google.protobuf"
-    const val version       = "3.21.7"
-    val libs = listOf(
-        "${group}:protobuf-java:${version}",
-        "${group}:protobuf-java-util:${version}",
-        "${group}:protobuf-kotlin:${version}"
-    )
-    const val compiler = "${group}:protoc:${version}"
+import java.io.File
+import org.gradle.api.file.FileCollection
+import org.jetbrains.dokka.gradle.GradleDokkaSourceSetBuilder
 
-    // https://github.com/google/protobuf-gradle-plugin/releases
-    object GradlePlugin {
-        /**
-         * The version of this plugin is already specified in `buildSrc/build.gradle.kts` file.
-         * Thus, when applying the plugin in projects build files, only the [id] should be used.
-         *
-         * When changing the version, also change the version used in the `build.gradle.kts`.
-         */
-        const val version = "0.8.19"
-        const val id = "com.google.protobuf"
-        const val lib = "${group}:protobuf-gradle-plugin:${version}"
-    }
+/**
+ * Returns only Java source roots out of all present in the source set.
+ *
+ * It is a helper method for generating documentation by Dokka only for Java code.
+ * It is helpful when both Java and Kotlin source files are present in a source set.
+ * Dokka can properly generate documentation for either Kotlin or Java depending on
+ * the configuration, but not both.
+ */
+internal fun GradleDokkaSourceSetBuilder.onlyJavaSources(): FileCollection {
+    return sourceRoots.filter(File::isJavaSourceDirectory)
+}
+
+private fun File.isJavaSourceDirectory(): Boolean {
+    return isDirectory && name == "java"
 }

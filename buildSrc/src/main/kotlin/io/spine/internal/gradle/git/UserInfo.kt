@@ -24,30 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.internal.dependency
+package io.spine.internal.gradle.git
 
-// https://github.com/protocolbuffers/protobuf
-@Suppress("MemberVisibilityCanBePrivate") // used directly from outside
-object Protobuf {
-    private const val group = "com.google.protobuf"
-    const val version       = "3.21.7"
-    val libs = listOf(
-        "${group}:protobuf-java:${version}",
-        "${group}:protobuf-java-util:${version}",
-        "${group}:protobuf-kotlin:${version}"
-    )
-    const val compiler = "${group}:protoc:${version}"
-
-    // https://github.com/google/protobuf-gradle-plugin/releases
-    object GradlePlugin {
-        /**
-         * The version of this plugin is already specified in `buildSrc/build.gradle.kts` file.
-         * Thus, when applying the plugin in projects build files, only the [id] should be used.
-         *
-         * When changing the version, also change the version used in the `build.gradle.kts`.
-         */
-        const val version = "0.8.19"
-        const val id = "com.google.protobuf"
-        const val lib = "${group}:protobuf-gradle-plugin:${version}"
+/**
+ * Contains information about a Git user.
+ *
+ * Determines the author and committer fields of a commit.
+ *
+ * @constructor throws an [IllegalArgumentException] if the name or the email
+ *              is an empty string.
+ */
+data class UserInfo(val name: String, val email: String) {
+    init {
+        require(name.isNotBlank()) { "Name cannot be an empty string." }
+        require(email.isNotBlank()) { "Email cannot be an empty string." }
     }
 }

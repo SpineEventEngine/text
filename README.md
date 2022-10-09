@@ -1,18 +1,19 @@
-# New repository template
-This repository serves as a template for new repositories of the Spine framework.
+[![Ubuntu build][ubuntu-build-badge]][gh-actions]
+[![codecov][codecov-badge]][codecov] &nbsp;
+[![license][license-badge]][license]
 
-Please see the [config][config-repo] repository
-for shared configurations and scripts. `config` is added to this repository as a Git submodule.
+# Spine Text Library
 
-## Applying the template
-                              
-### 1. Replace `"template"` with your project name
+This repository contains data types and utilities for working with text.
 
-Search for `template` throughout the code and replace it with the name of your project.
+## Java Support
 
-### 2. Review the project structure  
+This library is built with Java 11.
 
-Add at least one subproject. After adding the files and modifying `settings.gradle.kts`, search for
-the `TODO` items in the files in this repo. They may contain instructions on finalizing the setup.
+[codecov]: https://codecov.io/gh/SpineEventEngine/text
+[codecov-badge]: https://codecov.io/gh/SpineEventEngine/text/branch/master/graph/badge.svg
+[license-badge]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
+[license]: http://www.apache.org/licenses/LICENSE-2.0
+[gh-actions]: https://github.com/SpineEventEngine/text/actions
+[ubuntu-build-badge]: https://github.com/SpineEventEngine/text/actions/workflows/build-on-ubuntu.yml/badge.svg
 
-[config-repo]: https://github.com/SpineEventEngine/config
