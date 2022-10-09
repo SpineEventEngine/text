@@ -43,6 +43,9 @@ public final class Factory {
     static final Splitter SPLITTER = Splitter.on(lineSeparator());
     static final Joiner JOINER = Joiner.on(lineSeparator());
 
+    /**
+     * Prevents instantiation of this static factory class.
+     */
     private Factory() {
     }
 
