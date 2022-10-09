@@ -36,7 +36,7 @@ import static io.spine.util.Exceptions.newIllegalArgumentException;
 import static java.lang.System.lineSeparator;
 
 /**
- * Static utilities for creating instances of {@link Text}.
+ * Static factories and precondition checks for creating instances of {@link Text}.
  */
 public final class Factory {
 
@@ -92,17 +92,37 @@ public final class Factory {
         return text(lines);
     }
 
-    static void checkNoSeparators(Iterable<String> lines) {
+    /**
+     * Ensures that lines do not contain {@linkplain System#lineSeparator()
+     * line separators}.
+     *
+     * @throws IllegalArgumentException
+     *          if at least one line contains a {@linkplain System#lineSeparator()
+     *          line separator}
+     */
+    public static void checkNoSeparators(Iterable<String> lines) {
         lines.forEach(Factory::checkNoSeparator);
     }
 
-    static void checkNoSeparator(CharSequence s) {
+    /**
+     * Ensures that charter sequence does not contain a {@linkplain System#lineSeparator()
+     * line separator}.
+     *
+     * @throws IllegalArgumentException
+     *          if the sequence contains a {@linkplain System#lineSeparator()
+     *          line separator}
+     */
+    public static void checkNoSeparator(CharSequence s) {
         if (containsSeparator(s)) {
             throw newIllegalArgumentException("The line contains line separator: `%s`.", s);
         }
     }
 
-    static boolean containsSeparator(CharSequence s) {
+    /**
+     * Tells if the charter sequence contains a {@linkplain System#lineSeparator()
+     * line separator}.
+     */
+    public static boolean containsSeparator(CharSequence s) {
         return s.toString().contains(lineSeparator());
     }
 }
