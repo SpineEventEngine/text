@@ -159,4 +159,13 @@ public final class TextFactory {
     public static Position positionNotFound() {
         return NOT_FOUND;
     }
+
+    /**
+     * Obtains line separator used in the operating system.
+     *
+     * @apiNote Use this method for brevity of code related to working with lines.
+     */
+    public static String newLine() {
+        return System.lineSeparator();
+    }
 }

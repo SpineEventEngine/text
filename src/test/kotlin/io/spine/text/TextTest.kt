@@ -58,4 +58,9 @@ internal class TextTest {
         val value = text.value
         assertThat(value).isSameInstanceAs(text.value)
     }
+
+    @Test
+    fun `provide 'newLine()' shortcut method`() {
+        assertThat(TextFactory.newLine()).isSameInstanceAs(System.lineSeparator())
+    }
 }
