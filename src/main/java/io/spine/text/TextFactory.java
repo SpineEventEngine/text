@@ -38,7 +38,7 @@ import static java.lang.System.lineSeparator;
 /**
  * Static factories and precondition checks for creating instances of {@link Text}.
  */
-public final class Factory {
+public final class TextFactory {
 
     static final Splitter SPLITTER = Splitter.on(lineSeparator());
     static final Joiner JOINER = Joiner.on(lineSeparator());
@@ -46,7 +46,7 @@ public final class Factory {
     /**
      * Prevents instantiation of this static factory class.
      */
-    private Factory() {
+    private TextFactory() {
     }
 
     /**
@@ -101,7 +101,7 @@ public final class Factory {
      *          line separator}
      */
     public static void checkNoSeparators(Iterable<String> lines) {
-        lines.forEach(Factory::checkNoSeparator);
+        lines.forEach(TextFactory::checkNoSeparator);
     }
 
     /**

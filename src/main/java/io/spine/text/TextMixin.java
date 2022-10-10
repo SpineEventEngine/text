@@ -30,8 +30,8 @@ import io.spine.annotation.GeneratedMixin;
 
 import java.util.List;
 
-import static io.spine.text.Factory.SPLITTER;
-import static io.spine.text.Factory.checkNoSeparator;
+import static io.spine.text.TextFactory.SPLITTER;
+import static io.spine.text.TextFactory.checkNoSeparator;
 
 /**
  * Mixin interface for the {@code Text} data type.

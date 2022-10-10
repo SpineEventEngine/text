@@ -26,8 +26,8 @@
 package io.spine.text
 
 import com.google.common.truth.Truth.assertThat
-import io.spine.text.Factory.createText
-import io.spine.text.Factory.text
+import io.spine.text.TextFactory.createText
+import io.spine.text.TextFactory.text
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 

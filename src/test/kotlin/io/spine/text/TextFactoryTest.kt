@@ -31,33 +31,34 @@ import com.google.common.truth.Truth.assertThat
 import io.spine.testing.UtilityClassTest
 import org.junit.jupiter.api.Test
 
-class FactoryTest: UtilityClassTest<Factory>(Factory::class.java) {
+class TextFactoryTest: UtilityClassTest<TextFactory>(
+    TextFactory::class.java) {
 
     private val nl = System.lineSeparator()
 
     @Test
     fun `handle nulls passed to static methods`() {
-        NullPointerTester().testAllPublicStaticMethods(Factory::class.java)
+        NullPointerTester().testAllPublicStaticMethods(TextFactory::class.java)
     }
 
     @Test
     fun `split text into lines`() {
         val str = "uno${nl}dos${nl}tres"
-        val text = Factory.text(str)
+        val text = TextFactory.text(str)
         assertThat(text.lines()).containsExactly("uno", "dos", "tres")
     }
 
     @Test
     fun `join 'Iterable'`() {
         val iterable = listOf("bir", "iki", "üç")
-        val text = Factory.text(iterable)
+        val text = TextFactory.text(iterable)
         assertThat(text.value).isEqualTo("bir${nl}iki${nl}üç")
     }
 
     @Test
     fun `join an array`() {
         val array = arrayOf("one", "two", "three")
-        val text = Factory.text(array)
+        val text = TextFactory.text(array)
         assertThat(text.value).isEqualTo("one${nl}two${nl}three")
     }
 }
