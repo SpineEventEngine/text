@@ -30,7 +30,7 @@ import io.spine.annotation.GeneratedMixin;
 
 import java.util.List;
 
-import static io.spine.text.TextFactory.SPLITTER;
+import static io.spine.text.TextFactory.lineSplitter;
 import static io.spine.text.TextFactory.checkNoSeparator;
 
 /**
@@ -43,7 +43,7 @@ public interface TextMixin extends TextOrBuilder {
      * Obtains a read-only list of lines of this text.
      */
     default List<String> lines() {
-        return SPLITTER.splitToList(getValue());
+        return lineSplitter().splitToList(getValue());
     }
 
     /**

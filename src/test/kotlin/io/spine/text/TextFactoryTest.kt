@@ -61,4 +61,9 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
         val text = TextFactory.text(array)
         assertThat(text.value).isEqualTo("one${nl}two${nl}three")
     }
+
+    @Test
+    fun `expose line joiner for outside use`() {
+        assertThat(TextFactory.lineJoiner()).isNotNull()
+    }
 }

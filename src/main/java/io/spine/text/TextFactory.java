@@ -37,11 +37,19 @@ import static java.lang.System.lineSeparator;
 
 /**
  * Static factories and precondition checks for creating instances of {@link Text}.
+ *
+ * @apiNote A recommended way for using this class is using its methods statically imported,
+ *         so that the creation of {@link Text} objects looks compact:
+ *         <pre>{@code
+ *         import io.spine.text.TextFactory.text
+ *         ...
+ *         var twoLines = text("one", "two");
+ *         }</pre>
  */
 public final class TextFactory {
 
-    static final Splitter SPLITTER = Splitter.on(lineSeparator());
-    static final Joiner JOINER = Joiner.on(lineSeparator());
+    private static final Splitter SPLITTER = Splitter.on(lineSeparator());
+    private static final Joiner JOINER = Joiner.on(lineSeparator());
 
     /**
      * Prevents instantiation of this static factory class.
@@ -124,5 +132,20 @@ public final class TextFactory {
      */
     public static boolean containsSeparator(CharSequence s) {
         return s.toString().contains(lineSeparator());
+    }
+
+    /**
+     * Obtains the instance of the joiner on {@linkplain System#lineSeparator() line separator}.
+     */
+    public static Joiner lineJoiner() {
+        return JOINER;
+    }
+
+    /**
+     * Obtains the splitter that breaks the text on lines at {@linkplain System#lineSeparator()
+     * line separators}.
+     */
+    public static Splitter lineSplitter() {
+        return SPLITTER;
     }
 }
