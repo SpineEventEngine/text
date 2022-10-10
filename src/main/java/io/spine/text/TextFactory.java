@@ -69,7 +69,7 @@ public final class TextFactory {
     }
 
     /**
-     * Creates a new instance of text with lines separated by {@linkplain System#lineSeparator()
+     * Creates a new instance of text with lines separated by {@linkplain #newLine()
      * line separator}.
      */
     public static Text text(Iterable<String> lines) {
@@ -80,7 +80,7 @@ public final class TextFactory {
     }
 
     /**
-     * Creates a new instance of text with lines separated by {@linkplain System#lineSeparator()
+     * Creates a new instance of text with lines separated by {@linkplain #newLine()
      * line separator}.
      */
     public static Text text(String[] lines) {
@@ -92,7 +92,7 @@ public final class TextFactory {
      * Creates a new list with the given lines.
      *
      * @throws IllegalArgumentException
-     *          if any of the lines contains the {@linkplain System#lineSeparator()
+     *          if any of the lines contains the {@linkplain #newLine()
      *          line separator}
      */
     @VisibleForTesting
@@ -102,24 +102,20 @@ public final class TextFactory {
     }
 
     /**
-     * Ensures that lines do not contain {@linkplain System#lineSeparator()
-     * line separators}.
+     * Ensures that lines do not contain {@linkplain #newLine() line separators}.
      *
      * @throws IllegalArgumentException
-     *          if at least one line contains a {@linkplain System#lineSeparator()
-     *          line separator}
+     *          if at least one line contains a {@linkplain #newLine() line separator}
      */
     public static void checkNoSeparators(Iterable<String> lines) {
         lines.forEach(TextFactory::checkNoSeparator);
     }
 
     /**
-     * Ensures that charter sequence does not contain a {@linkplain System#lineSeparator()
-     * line separator}.
+     * Ensures that charter sequence does not contain a {@linkplain #newLine() line separator}.
      *
      * @throws IllegalArgumentException
-     *          if the sequence contains a {@linkplain System#lineSeparator()
-     *          line separator}
+     *          if the sequence contains a {@linkplain #newLine() line separator}
      */
     public static void checkNoSeparator(CharSequence s) {
         if (containsSeparator(s)) {
@@ -128,7 +124,7 @@ public final class TextFactory {
     }
 
     /**
-     * Tells if the charter sequence contains a {@linkplain System#lineSeparator()
+     * Tells if the charter sequence contains a {@linkplain #newLine()
      * line separator}.
      */
     public static boolean containsSeparator(CharSequence s) {
@@ -136,14 +132,14 @@ public final class TextFactory {
     }
 
     /**
-     * Obtains the instance of the joiner on {@linkplain System#lineSeparator() line separator}.
+     * Obtains the instance of the joiner on {@linkplain #newLine() line separator}.
      */
     public static Joiner lineJoiner() {
         return JOINER;
     }
 
     /**
-     * Obtains the splitter that breaks the text on lines at {@linkplain System#lineSeparator()
+     * Obtains the splitter that breaks the text on lines at {@linkplain #newLine()
      * line separators}.
      */
     public static Splitter lineSplitter() {
@@ -166,6 +162,6 @@ public final class TextFactory {
      * @apiNote Use this method for brevity of code related to working with lines.
      */
     public static String newLine() {
-        return System.lineSeparator();
+        return lineSeparator();
     }
 }
