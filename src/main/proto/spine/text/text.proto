@@ -43,9 +43,15 @@ message Text {
 // A position in the text.
 message Position {
 
-    // A one-based index of the line of text.
-    int32 line = 1 [(min).value = "1"];
+    // A zero-based index of the line of text.
+    //
+    // A value of -1 means "Not found".
+    //
+    int32 line = 1 [(min).value = "-1"];
 
-    // A one-based position inside the [line].
-    int32 column = 2 [(min).value = "1"];
+    // A zero-based position inside the [line].
+    //
+    // If the [line] property equals -1 the value of this field has no meaning.
+    //
+    int32 column = 2 [(min).value = "0"];
 }
