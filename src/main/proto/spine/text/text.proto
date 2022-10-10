@@ -51,7 +51,7 @@ message Position {
 
     // A zero-based position inside the [line].
     //
-    // If the [line] property equals -1 the value of this field has no meaning.
+    // If the [line] property equals -1 the value of the column field has no meaning.
     //
     int32 column = 2 [(min).value = "0"];
 }
