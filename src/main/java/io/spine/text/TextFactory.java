@@ -50,6 +50,7 @@ public final class TextFactory {
 
     private static final Splitter SPLITTER = Splitter.on(lineSeparator());
     private static final Joiner JOINER = Joiner.on(lineSeparator());
+    private static final Position NOT_FOUND = Position.newBuilder().setLine(-1).build();
 
     /**
      * Prevents instantiation of this static factory class.
@@ -147,5 +148,15 @@ public final class TextFactory {
      */
     public static Splitter lineSplitter() {
         return SPLITTER;
+    }
+
+    /**
+     * Obtains the instance of {@link Position} which means "not found".
+     *
+     * <p>The {@linkplain Position#getLine() line} property of the returned instance is equal -1,
+     * and {@linkplain Position#getColumn() column} property has no meaning and is undefined.
+     */
+    public static Position positionNotFound() {
+        return NOT_FOUND;
     }
 }

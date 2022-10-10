@@ -66,4 +66,9 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
     fun `expose line joiner for outside use`() {
         assertThat(TextFactory.lineJoiner()).isNotNull()
     }
+
+    @Test
+    fun `provide 'not found' instance`() {
+        assertThat(TextFactory.positionNotFound().line).isEqualTo(-1)
+    }
 }
