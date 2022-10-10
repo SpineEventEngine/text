@@ -24,26 +24,19 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-println("`slow-tests.gradle` script is deprecated. " +
-        "Please use `TaskContainer.registerTestTasks()` instead.")
+package io.spine.internal.gradle.git
 
-final def slowTag = 'slow' // See io.spine.testing.SlowTest
-
-task fastTest(type: Test) {
-    description = 'Executes all JUnit tests but the ones tagged as "slow".'
-    group = 'Verification'
-
-    useJUnitPlatform {
-        excludeTags slowTag
+/**
+ * Contains information about a Git user.
+ *
+ * Determines the author and committer fields of a commit.
+ *
+ * @constructor throws an [IllegalArgumentException] if the name or the email
+ *              is an empty string.
+ */
+data class UserInfo(val name: String, val email: String) {
+    init {
+        require(name.isNotBlank()) { "Name cannot be an empty string." }
+        require(email.isNotBlank()) { "Email cannot be an empty string." }
     }
-}
-
-task slowTest(type: Test) {
-    description = 'Executes JUnit tests tagged as "slow".'
-    group = 'Verification'
-
-    useJUnitPlatform {
-        includeTags slowTag
-    }
-    shouldRunAfter fastTest
 }

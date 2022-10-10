@@ -24,19 +24,47 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+package io.spine.text;
+
+import io.spine.annotation.GeneratedMixin;
+
+import java.util.List;
+
+import static io.spine.text.TextFactory.lineSplitter;
+import static io.spine.text.TextFactory.checkNoSeparator;
+
 /**
- * This script defines the common configuration for license report scripts.
+ * Mixin interface for the {@code Text} data type.
  */
+@GeneratedMixin
+public interface TextMixin extends TextOrBuilder {
 
-println("`license-report-common.gradle` script is deprecated. " +
-        "Please use the `LicenseReporter` utility instead.")
+    /**
+     * Obtains a read-only list of lines of this text.
+     */
+    default List<String> lines() {
+        return lineSplitter().splitToList(getValue());
+    }
 
-apply plugin: 'base'
+    /**
+     * Tells if this text is empty.
+     */
+    default boolean isEmpty() {
+        return getValue().isEmpty();
+    }
 
-ext.licenseReportConfig = [
-        // The output filename
-        outputFilename  : "license-report.md",
+    /**
+     * Obtains the size of the text in characters, including line separators.
+     */
+    default int size() {
+        return getValue().length();
+    }
 
-        // The path to a directory, to which a per-project report is generated.
-        relativePath    : "/reports/dependency-license/dependency"
-]
+    /**
+     * Tells if this text contains the given sequence.
+     */
+    default boolean contains(CharSequence sequence) {
+        checkNoSeparator(sequence);
+        return getValue().contains(sequence);
+    }
+}

@@ -24,39 +24,13 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/*
- * This plugin configured the test output as follows:
- *
- *  - the standard streams of the tests execution are logged;
- *  - exceptions thrown in tests are logged;
- *  - after all the tests are executed, a short test summary is logged; the summary shown the number
- *    of tests and their results.
+/**
+ * This package provides data types and utilities for working with multi-line texts.
  */
+@CheckReturnValue
+@ParametersAreNonnullByDefault
+package io.spine.text;
 
-println("`test-output.gradle` script is deprecated. Please use `Test.configureLogging()` instead.")
+import com.google.errorprone.annotations.CheckReturnValue;
 
-tasks.withType(Test).each {
-    it.testLogging {
-        showStandardStreams = true
-        showExceptions = true
-        showStackTraces = true
-        showCauses = true
-        exceptionFormat = 'full'
-    }
-
-    it.afterSuite { final testDescriptor, final result ->
-        // If the descriptor has no parent, then it is the root test suite, i.e. it includes the
-        // info about all the run tests.
-        if (!testDescriptor.parent) {
-            logger.lifecycle(
-                    """
-                    Test summary:
-                    >> ${result.testCount} tests
-                    >> ${result.successfulTestCount} succeeded
-                    >> ${result.failedTestCount} failed
-                    >> ${result.skippedTestCount} skipped
-                    """
-            )
-        }
-    }
-}
+import javax.annotation.ParametersAreNonnullByDefault;

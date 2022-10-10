@@ -24,5 +24,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// TODO: Rename the root project and add subprojects.
-rootProject.name = "spine-template"
+// Do not use `spine-` prefix for this single-module project.
+// It would be added automatically when publishing.
+rootProject.name = "text"
