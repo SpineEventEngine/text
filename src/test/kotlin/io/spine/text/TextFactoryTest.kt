@@ -29,6 +29,7 @@ package io.spine.text
 import com.google.common.testing.NullPointerTester
 import com.google.common.truth.Truth.assertThat
 import io.spine.testing.UtilityClassTest
+import io.spine.text.PositionBeyondText.NOT_IN_TEXT
 import org.junit.jupiter.api.Test
 
 class TextFactoryTest: UtilityClassTest<TextFactory>(
@@ -69,6 +70,10 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
 
     @Test
     fun `provide 'not found' instance`() {
-        assertThat(TextFactory.positionNotFound().line).isEqualTo(-1)
+        val notFound = TextFactory.positionNotFound()
+        assertThat(notFound.hasLine())
+            .isFalse()
+        assertThat(notFound.beyondText)
+            .isEqualTo(NOT_IN_TEXT)
     }
 }

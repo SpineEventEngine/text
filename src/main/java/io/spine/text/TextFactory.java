@@ -32,6 +32,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static io.spine.text.PositionBeyondText.NOT_IN_TEXT;
 import static io.spine.util.Exceptions.newIllegalArgumentException;
 import static java.lang.System.lineSeparator;
 
@@ -50,7 +51,9 @@ public final class TextFactory {
 
     private static final Splitter SPLITTER = Splitter.on(lineSeparator());
     private static final Joiner JOINER = Joiner.on(lineSeparator());
-    private static final Position NOT_FOUND = Position.newBuilder().setLine(-1).build();
+    private static final Position NOT_FOUND = Position.newBuilder()
+            .setBeyondText(NOT_IN_TEXT)
+            .build();
 
     /**
      * Prevents instantiation of this static factory class.
@@ -117,9 +120,9 @@ public final class TextFactory {
      * @throws IllegalArgumentException
      *          if the sequence contains a {@linkplain #newLine() line separator}
      */
-    public static void checkNoSeparator(CharSequence s) {
-        if (containsSeparator(s)) {
-            throw newIllegalArgumentException("The line contains line separator: `%s`.", s);
+    public static void checkNoSeparator(CharSequence line) {
+        if (containsSeparator(line)) {
+            throw newIllegalArgumentException("The line contains line separator: `%s`.", line);
         }
     }
 
