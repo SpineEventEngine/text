@@ -43,15 +43,39 @@ message Text {
 // A position in the text.
 message Position {
 
-    // A zero-based index of the line of text.
-    //
-    // A value of -1 means "Not found".
-    //
-    int32 line = 1 [(min).value = "-1"];
+    oneof marker {
+
+        // A zero-based index of the line of text.
+        //
+        // A value of -1 means "Not found".
+        //
+        int32 line = 1 [(min).value = "-1"];
+
+        // A position beyond the existing text.
+        PositionBeyondText beyond_text = 3;
+    }
 
     // A zero-based position inside the [line].
     //
     // If the [line] property equals -1 the value of the column field has no meaning.
     //
+    // If the line marker is set beyond the existing text, user may choose to either:
+    //   - ignore the column;
+    //   - treat non-zero column number as the number of blank space symbols that must be padded
+    //     to reach the required column.
+    //
     int32 column = 2 [(min).value = "0"];
+}
+
+// A pointer to a position beyond the existing text.
+//
+enum PositionBeyondText {
+
+    PBT_UNDEFINED = 0;
+
+    // Points at the position before the first line of the text.
+    BEFORE_TEXT = 1;
+
+    // Points at the position after the last line of the text.
+    AFTER_TEXT = 2;
 }
