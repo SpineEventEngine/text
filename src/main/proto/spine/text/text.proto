@@ -47,9 +47,10 @@ message Position {
 
         // A zero-based index of the line of text.
         //
-        // A value of -1 means "Not found".
+        // If this value is set, the position is known and specific.
+        // See `beyond_text` for other cases.
         //
-        int32 line = 1 [(min).value = "-1"];
+        int32 line = 1 [(min).value = "0"];
 
         // A position beyond the existing text.
         PositionBeyondText beyond_text = 3;
@@ -73,9 +74,12 @@ enum PositionBeyondText {
 
     PBT_UNDEFINED = 0;
 
-    // Points at the position before the first line of the text.
-    BEFORE_TEXT = 1;
+    // Points at the position after the last line of the text regardless of how long it is.
+    AFTER_TEXT = 1;
 
-    // Points at the position after the last line of the text.
-    AFTER_TEXT = 2;
+    // Signifies that the expected position is not in text.
+    //
+    // For example, for text lookups, this means that the query substring is not in the text.
+    //
+    NOT_IN_TEXT = 2;
 }
