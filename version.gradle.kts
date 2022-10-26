@@ -29,4 +29,4 @@ val validationVersion: String by extra("2.0.0-SNAPSHOT.31")
 val javadocToolsVersion by extra("2.0.0-SNAPSHOT.74")
 val mcJavaVersion: String by extra("2.0.0-SNAPSHOT.101")
 
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.1")
+val versionToPublish: String by extra("2.0.0-SNAPSHOT.2")
