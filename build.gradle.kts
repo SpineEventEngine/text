@@ -82,14 +82,14 @@ plugins {
     `java-library`
     kotlin("jvm")
     idea
-    id(io.spine.internal.dependency.Protobuf.GradlePlugin.id)
-    id(io.spine.internal.dependency.ErrorProne.GradlePlugin.id)
+    protobuf
+    errorprone
     pmd
     jacoco
-    `force-jacoco`
     `project-report`
     `pmd-settings`
     `dokka-for-java`
+    `detekt-code-analysis`
 }
 
 apply(from = "$projectDir/version.gradle.kts")
