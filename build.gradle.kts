@@ -108,7 +108,6 @@ dependencies {
     errorprone(ErrorProne.core)
 
     implementation(spine.base)
-    implementation(spine.validation.runtime)
 
     testImplementation(JUnit.runner)
     testImplementation(spine.testlib)
