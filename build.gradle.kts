@@ -73,13 +73,7 @@ plugins {
     `detekt-code-analysis`
 }
 
-apply {
-    from("$projectDir/version.gradle.kts")
-    plugin(Spine.McJava.pluginId)
-    plugin<IncrementGuard>()
-    plugin<VersionWriter>()
-}
-
+apply(from = "$projectDir/version.gradle.kts")
 val versionToPublish: String by extra
 val spine = Spine(project)
 
@@ -88,6 +82,12 @@ version = versionToPublish
 
 repositories {
     applyStandard()
+}
+
+apply {
+    plugin(Spine.McJava.pluginId)
+    plugin<IncrementGuard>()
+    plugin<VersionWriter>()
 }
 
 configurations {
