@@ -179,9 +179,7 @@ tasks {
         }
     }
     test {
-        useJUnitPlatform {
-            includeEngines("junit-jupiter")
-        }
+        useJUnitPlatform()
         configureLogging()
         finalizedBy(jacocoTestReport)
     }
