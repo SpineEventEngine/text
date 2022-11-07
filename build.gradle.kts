@@ -33,6 +33,7 @@ import com.google.protobuf.gradle.remove
 import io.spine.internal.dependency.Dokka
 import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.publish.IncrementGuard
 import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.VersionWriter
@@ -53,28 +54,9 @@ import io.spine.internal.gradle.testing.registerTestTasks
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    apply(from = "$projectDir/version.gradle.kts")
-    io.spine.internal.gradle.doApplyStandard(repositories)
-    repositories {
-        io.spine.internal.gradle.publish.PublishingRepos.gitHub("mc-java")
-    }
-
-    val mcJavaVersion: String by extra
-    val baseVersion: String by extra
+    io.spine.internal.gradle.applyWithStandard(this, rootProject, "mc-java")
     dependencies {
-        classpath("io.spine.tools:spine-mc-java-plugins:${mcJavaVersion}:all")
-    }
-
-    val dokka = io.spine.internal.dependency.Dokka
-    configurations {
-        all {
-            resolutionStrategy {
-                force(
-                    "org.jetbrains.dokka:dokka-base:${dokka.version}",
-                    "io.spine:spine-base:$baseVersion",
-                )
-            }
-        }
+        classpath(io.spine.internal.dependency.Spine.McJava.pluginLib)
     }
 }
 
@@ -92,10 +74,15 @@ plugins {
     `detekt-code-analysis`
 }
 
-apply(from = "$projectDir/version.gradle.kts")
-val baseVersion: String by extra
-val validationVersion: String by extra
+apply {
+    from("$projectDir/version.gradle.kts")
+    plugin(Spine.McJava.pluginId)
+    plugin<IncrementGuard>()
+    plugin<VersionWriter>()
+}
+
 val versionToPublish: String by extra
+val spine = Spine(project)
 
 group = "io.spine"
 version = versionToPublish
@@ -111,29 +98,21 @@ configurations {
     all {
         resolutionStrategy {
             force(
-                "org.jetbrains.dokka:dokka-base:${Dokka.version}",
-                "io.spine:spine-base:$baseVersion",
-                "io.spine.validation:spine-validation-java-runtime:$validationVersion",
+                spine.base,
+                spine.validation.runtime,
             )
         }
     }
 }
 
-apply {
-    plugin("jacoco")
-    plugin("io.spine.mc-java")
-}
-apply<IncrementGuard>()
-apply<VersionWriter>()
-
 dependencies {
     errorprone(ErrorProne.core)
 
-    implementation("io.spine:spine-base:$baseVersion")
-    implementation("io.spine.validation:spine-validation-java-runtime:$validationVersion")
+    implementation(spine.base)
+    implementation(spine.validation.runtime)
 
     testImplementation(JUnit.runner)
-    testImplementation("io.spine.tools:spine-testlib:$baseVersion")
+    testImplementation(spine.testlib)
 }
 
 spinePublishing {
@@ -142,7 +121,6 @@ spinePublishing {
         PublishingRepos.cloudRepo,
         PublishingRepos.cloudArtifactRegistry
     )
-
     dokkaJar {
         enabled = true
     }
@@ -186,7 +164,7 @@ protobuf {
     }
 }
 
-val javadocToolsVersion: String by extra
+val javadocToolsVersion = Spine.DefaultVersion.javadocTools
 updateGitHubPages(javadocToolsVersion) {
     allowInternalJavadoc.set(true)
     rootFolder.set(rootDir)
