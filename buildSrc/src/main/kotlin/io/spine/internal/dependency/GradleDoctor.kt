@@ -24,9 +24,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+package io.spine.internal.dependency
+
 /**
- *  The version of this library.
+ * Helps optimize Gradle Builds by ensuring recommendations at build time.
  *
- *  For dependencies on Spine modules please see [io.spine.internal.dependency.Spine].
+ * See [plugin site](https://runningcode.github.io/gradle-doctor) for features and usage.
  */
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.2")
+object GradleDoctor {
+    const val version = "0.8.1"
+    const val pluginId = "com.osacky.doctor"
+}
