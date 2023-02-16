@@ -26,8 +26,6 @@
 
 @file:Suppress("RemoveRedundantQualifierName")
 
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.plugins
 import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.remove
 import io.spine.internal.dependency.ErrorProne
@@ -97,7 +95,9 @@ configurations {
     all {
         resolutionStrategy {
             force(
+                JUnit.runner,
                 spine.base,
+                spine.toolBase,
                 spine.validation.runtime,
             )
         }
