@@ -42,6 +42,12 @@ all modules and does not describe the project structure per-subproject.
     <scope>compile</scope>
   </dependency>
   <dependency>
+    <groupId>io.kotest</groupId>
+    <artifactId>kotest-assertions-core</artifactId>
+    <version>5.5.4</version>
+    <scope>test</scope>
+  </dependency>
+  <dependency>
     <groupId>io.spine.tools</groupId>
     <artifactId>spine-testlib</artifactId>
     <version>2.0.0-SNAPSHOT.150</version>
@@ -142,6 +148,11 @@ all modules and does not describe the project structure per-subproject.
   <dependency>
     <groupId>org.jetbrains.dokka</groupId>
     <artifactId>dokka-core</artifactId>
+    <version>1.7.20</version>
+  </dependency>
+  <dependency>
+    <groupId>org.jetbrains.dokka</groupId>
+    <artifactId>javadoc-plugin</artifactId>
     <version>1.7.20</version>
   </dependency>
   <dependency>
