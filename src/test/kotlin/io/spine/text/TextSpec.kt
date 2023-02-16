@@ -25,10 +25,7 @@
  */
 package io.spine.text
 
-import com.google.common.truth.Truth.assertThat
 import io.kotest.matchers.shouldBe
-import io.kotest.matchers.string.shouldContain
-import io.kotest.matchers.string.shouldNotContain
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.text.TextFactory.createText
 import io.spine.text.TextFactory.text
