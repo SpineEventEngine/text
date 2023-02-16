@@ -48,6 +48,7 @@ import io.spine.internal.gradle.report.pom.PomGenerator
 import io.spine.internal.gradle.standardToSpineSdk
 import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
+import org.gradle.api.file.DuplicatesStrategy.INCLUDE
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
@@ -69,6 +70,7 @@ plugins {
     `pmd-settings`
     `dokka-for-java`
     `detekt-code-analysis`
+    `gradle-doctor`
 }
 
 apply(from = "$projectDir/version.gradle.kts")
@@ -183,6 +185,14 @@ tasks {
         useJUnitPlatform()
         configureLogging()
         finalizedBy(jacocoTestReport)
+    }
+}
+
+configureTaskDependencies()
+
+project.afterEvaluate {
+    @Suppress("UNUSED_VARIABLE") val sourcesJar: Task by tasks.getting {
+        (this as Jar).duplicatesStrategy = INCLUDE
     }
 }
 
