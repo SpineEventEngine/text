@@ -29,6 +29,7 @@
 import com.google.protobuf.gradle.remove
 import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Spine
 import io.spine.internal.gradle.VersionWriter
 import io.spine.internal.gradle.checkstyle.CheckStyleConfig
@@ -111,6 +112,7 @@ dependencies {
 
     testImplementation(JUnit.runner)
     testImplementation(spine.testlib)
+    testImplementation(Kotest.assertions)
 }
 
 spinePublishing {
