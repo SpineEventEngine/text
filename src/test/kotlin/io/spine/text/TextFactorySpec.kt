@@ -23,44 +23,53 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+
 package io.spine.text
 
-import com.google.common.truth.Truth.assertThat
-import io.spine.text.TextFactory.createText
+import io.kotest.matchers.collections.shouldContainInOrder
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
+import io.spine.testing.UtilityClassTest
 import io.spine.text.TextFactory.text
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.assertThrows
 
-internal class TextTest {
+@DisplayName("`TextFactory` should")
+class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class.java) {
 
     private val nl = System.lineSeparator()
 
     @Test
-    fun `find substring`() {
-        val text = createText("abra", "ka", "dabra")
+    fun `split text into lines`() {
+        val str = "uno${nl}dos${nl}tres"
+        val text = text(str)
 
-        assertThrows<IllegalArgumentException> { text.contains("abra${nl}ka") }
-
-        assertThat(text.contains("abra")).isTrue()
-        assertThat(text.contains("kada")).isFalse()
+        text.lines() shouldContainInOrder listOf("uno", "dos", "tres")
     }
 
     @Test
-    fun `must not accept lines with separators`() {
-        assertThrows<IllegalArgumentException> {  createText("un", "${nl}o") }
-        assertThrows<IllegalArgumentException> {  text(listOf("dos", "tres${nl}")) }
+    fun `join 'Iterable'`() {
+        val iterable = listOf("bir", "iki", "üç")
+        val text = text(iterable)
+
+        text.value shouldBe "bir${nl}iki${nl}üç"
     }
 
     @Test
-    fun `always return the same value`() {
-        val text = createText("donna", "be", "la", "mare")
+    fun `join an array`() {
+        val array = arrayOf("one", "two", "three")
+        val text = text(array)
 
-        val value = text.value
-        assertThat(value).isSameInstanceAs(text.value)
+        text.value shouldBe "one${nl}two${nl}three"
     }
 
     @Test
-    fun `provide 'newLine()' shortcut method`() {
-        assertThat(TextFactory.newLine()).isSameInstanceAs(System.lineSeparator())
+    fun `expose line joiner for outside use`() {
+        TextFactory.lineJoiner() shouldNotBe null
+    }
+
+    @Test
+    fun `provide 'not found' instance`() {
+        TextFactory.positionNotFound().line shouldBe -1
     }
 }
