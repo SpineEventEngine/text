@@ -31,14 +31,61 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.string.Separator
 import io.spine.testing.UtilityClassTest
+import io.spine.text.TextFactory.createText
+import io.spine.text.TextFactory.newLine
 import io.spine.text.TextFactory.text
 import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Nested
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertDoesNotThrow
+import org.junit.jupiter.api.assertThrows
 
 @DisplayName("`TextFactory` should")
-class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class.java) {
+internal class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class.java) {
 
     private val nl = Separator.NL
+
+    companion object {
+        val linesWithSeparators: Array<String> = arrayOf(
+            " Fiz ${Separator.LF} buz? ",
+            " Foo ${Separator.CR} bar.",
+            "Ka ${Separator.CRLF} boom!"
+        )
+    }
+
+    @Nested
+    @DisplayName("prohibit line separators when building from many lines")
+    inner class Prohibition {
+
+        @Test
+        fun `with an array`() = assertThrowsOn {
+            text(linesWithSeparators)
+        }
+
+        @Test
+        fun `with an Iterable`() = assertThrowsOn {
+            text(linesWithSeparators.toList())
+        }
+
+        @Test
+        fun `with vararg`() = assertThrowsOn {
+            createText(linesWithSeparators[0], linesWithSeparators[1])
+        }
+
+        private fun assertThrowsOn(fn: () -> Unit) {
+            assertThrows<IllegalArgumentException> {
+                fn.invoke()
+            }
+        }
+    }
+
+    @Test
+    fun `allow creating text with raw string value`() {
+        val rawText = linesWithSeparators.joinToString(separator = nl)
+        assertDoesNotThrow {
+            text(rawText)
+        }
+    }
 
     @Test
     fun `split text into lines`() {
@@ -72,5 +119,10 @@ class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class.java) {
     @Test
     fun `provide 'not found' instance`() {
         TextFactory.positionNotFound().line shouldBe -1
+    }
+
+    @Test
+    fun `provide shortcut method for obtaining system line separator`() {
+        newLine() shouldBe System.lineSeparator()
     }
 }
