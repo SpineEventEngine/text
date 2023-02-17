@@ -29,6 +29,7 @@ package io.spine.text
 import io.kotest.matchers.collections.shouldContainInOrder
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
+import io.spine.string.Separator
 import io.spine.testing.UtilityClassTest
 import io.spine.text.TextFactory.text
 import org.junit.jupiter.api.DisplayName
@@ -37,7 +38,7 @@ import org.junit.jupiter.api.Test
 @DisplayName("`TextFactory` should")
 class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class.java) {
 
-    private val nl = System.lineSeparator()
+    private val nl = Separator.NL
 
     @Test
     fun `split text into lines`() {

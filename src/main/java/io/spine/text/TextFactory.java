@@ -30,10 +30,10 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
+import io.spine.string.Separator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static io.spine.util.Exceptions.newIllegalArgumentException;
-import static java.lang.System.lineSeparator;
 
 /**
  * Static factories and precondition checks for creating instances of {@link Text}.
@@ -48,8 +48,9 @@ import static java.lang.System.lineSeparator;
  */
 public final class TextFactory {
 
-    private static final Splitter SPLITTER = Splitter.on(lineSeparator());
-    private static final Joiner JOINER = Joiner.on(lineSeparator());
+    private static final String NL = Separator.INSTANCE.getNL();
+    private static final Splitter SPLITTER = Splitter.on(NL);
+    private static final Joiner JOINER = Joiner.on(NL);
     private static final Position NOT_FOUND = Position.newBuilder().setLine(-1).build();
 
     /**
@@ -89,7 +90,7 @@ public final class TextFactory {
     }
 
     /**
-     * Creates a new list with the given lines.
+     * Creates a new multi-line text with the given lines.
      *
      * @throws IllegalArgumentException
      *          if any of the lines contains the {@linkplain #newLine()
@@ -128,7 +129,7 @@ public final class TextFactory {
      * line separator}.
      */
     public static boolean containsSeparator(CharSequence s) {
-        return s.toString().contains(lineSeparator());
+        return s.toString().contains(NL);
     }
 
     /**
@@ -162,6 +163,6 @@ public final class TextFactory {
      * @apiNote Use this method for brevity of code related to working with lines.
      */
     public static String newLine() {
-        return lineSeparator();
+        return NL;
     }
 }
