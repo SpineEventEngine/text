@@ -26,34 +26,33 @@
 
 @file:Suppress("RemoveRedundantQualifierName")
 
-import com.google.protobuf.gradle.generateProtoTasks
-import com.google.protobuf.gradle.plugins
-import com.google.protobuf.gradle.protobuf
 import com.google.protobuf.gradle.remove
 import io.spine.internal.dependency.ErrorProne
 import io.spine.internal.dependency.JUnit
+import io.spine.internal.dependency.Kotest
 import io.spine.internal.dependency.Spine
-import io.spine.internal.gradle.publish.IncrementGuard
-import io.spine.internal.gradle.javadoc.JavadocConfig
 import io.spine.internal.gradle.VersionWriter
-import io.spine.internal.gradle.applyStandard
 import io.spine.internal.gradle.checkstyle.CheckStyleConfig
 import io.spine.internal.gradle.excludeProtobufLite
 import io.spine.internal.gradle.forceVersions
 import io.spine.internal.gradle.github.pages.updateGitHubPages
 import io.spine.internal.gradle.javac.configureErrorProne
 import io.spine.internal.gradle.javac.configureJavac
+import io.spine.internal.gradle.javadoc.JavadocConfig
+import io.spine.internal.gradle.publish.IncrementGuard
 import io.spine.internal.gradle.publish.PublishingRepos
 import io.spine.internal.gradle.publish.PublishingRepos.gitHub
+import io.spine.internal.gradle.publish.spinePublishing
 import io.spine.internal.gradle.report.license.LicenseReporter
 import io.spine.internal.gradle.report.pom.PomGenerator
-import io.spine.internal.gradle.publish.spinePublishing
+import io.spine.internal.gradle.standardToSpineSdk
 import io.spine.internal.gradle.testing.configureLogging
 import io.spine.internal.gradle.testing.registerTestTasks
+import org.gradle.api.file.DuplicatesStrategy.INCLUDE
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 buildscript {
-    io.spine.internal.gradle.applyWithStandard(this, rootProject, "mc-java")
+    standardSpineSdkRepositories()
     dependencies {
         classpath(io.spine.internal.dependency.Spine.McJava.pluginLib)
     }
@@ -71,6 +70,7 @@ plugins {
     `pmd-settings`
     `dokka-for-java`
     `detekt-code-analysis`
+    `gradle-doctor`
 }
 
 apply(from = "$projectDir/version.gradle.kts")
@@ -81,7 +81,7 @@ group = "io.spine"
 version = versionToPublish
 
 repositories {
-    applyStandard()
+    standardToSpineSdk()
 }
 
 apply {
@@ -97,7 +97,9 @@ configurations {
     all {
         resolutionStrategy {
             force(
+                JUnit.runner,
                 spine.base,
+                spine.toolBase,
                 spine.validation.runtime,
             )
         }
@@ -112,6 +114,7 @@ dependencies {
 
     testImplementation(JUnit.runner)
     testImplementation(spine.testlib)
+    testImplementation(Kotest.assertions)
 }
 
 spinePublishing {
@@ -182,6 +185,14 @@ tasks {
         useJUnitPlatform()
         configureLogging()
         finalizedBy(jacocoTestReport)
+    }
+}
+
+configureTaskDependencies()
+
+project.afterEvaluate {
+    @Suppress("UNUSED_VARIABLE") val sourcesJar: Task by tasks.getting {
+        (this as Jar).duplicatesStrategy = INCLUDE
     }
 }
 

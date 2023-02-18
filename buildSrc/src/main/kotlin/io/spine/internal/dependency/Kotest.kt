@@ -26,10 +26,13 @@
 
 package io.spine.internal.dependency
 
-// https://github.com/google/auto
-object AutoService {
-    private const val version = "1.0.1"
-    const val annotations = "com.google.auto.service:auto-service-annotations:${version}"
-    @Suppress("unused")
-    const val processor   = "com.google.auto.service:auto-service:${version}"
+/**
+ * Testing framework for Kotlin.
+ *
+ * @see <a href="https://kotest.io/">Kotest site</a>
+ */
+object Kotest {
+    const val version = "5.5.4"
+    const val group = "io.kotest"
+    const val assertions = "$group:kotest-assertions-core:$version"
 }

@@ -23,11 +23,46 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+package io.spine.text
 
-package io.spine.internal.dependency
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.text.TextFactory.createText
+import io.spine.text.TextFactory.text
+import org.junit.jupiter.api.DisplayName
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
-// https://github.com/google/auto
-object AutoValue {
-    private const val version = "1.9"
-    const val annotations = "com.google.auto.value:auto-value-annotations:${version}"
+@DisplayName("`Text` should")
+internal class TextSpec {
+
+    private val nl = System.lineSeparator()
+
+    @Test
+    fun `find substring`() {
+        val text = createText("abra", "ka", "dabra")
+
+        assertThrows<IllegalArgumentException> { text.contains("abra${nl}ka") }
+
+        text.contains("abra") shouldBe true
+        text.contains("kada") shouldBe false
+    }
+
+    @Test
+    fun `must not accept lines with separators`() {
+        assertThrows<IllegalArgumentException> {  createText("un", "${nl}o") }
+        assertThrows<IllegalArgumentException> {  text(listOf("dos", "tres${nl}")) }
+    }
+
+    @Test
+    fun `always return the same value`() {
+        val text = createText("donna", "be", "la", "mare")
+
+        text.value shouldBeSameInstanceAs text.value
+    }
+
+    @Test
+    fun `provide 'newLine()' shortcut method`() {
+        TextFactory.newLine() shouldBeSameInstanceAs nl
+    }
 }
