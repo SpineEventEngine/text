@@ -64,8 +64,12 @@ internal fun nonSystemSeparators(): Iterable<String> {
  * Tells if this string contain at least one non-system line separator.
  */
 @VisibleForTesting
-internal fun String.containsNonSystemSeparators() =
-    nonSystemSeparators().any(::contains)
+internal fun String.containsNonSystemSeparators(): Boolean {
+    val allSeparators = Regex("\\R")
+    val separators = allSeparators.findAll(this)
+    val found = separators.any { it.value != Separator.NL }
+    return found
+}
 
 /**
  * Ensures that the text does not contain non-system line separators.
