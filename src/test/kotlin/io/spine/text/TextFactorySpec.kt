@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -41,12 +41,12 @@ import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 
 @DisplayName("`TextFactory` should")
-internal class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class.java) {
+internal class TextFactorySpec : UtilityClassTest<TextFactory>(TextFactory::class.java) {
 
     private val nl = Separator.NL
 
     companion object {
-        val linesWithSeparators: Array<String> = arrayOf(
+        val linesWithSeparators = listOf(
             " Fiz ${Separator.LF} buz? ",
             " Foo ${Separator.CR} bar.",
             "Ka ${Separator.CRLF} boom!"
@@ -63,7 +63,7 @@ internal class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class
         }
 
         @Test
-        fun `with an Iterable`() = assertThrowsOn {
+        fun `with an 'Iterable'`() = assertThrowsOn {
             text(linesWithSeparators.toList())
         }
 
@@ -101,14 +101,6 @@ internal class TextFactorySpec: UtilityClassTest<TextFactory>(TextFactory::class
         val text = text(iterable)
 
         text.value shouldBe "bir${nl}iki${nl}üç"
-    }
-
-    @Test
-    fun `join an array`() {
-        val array = arrayOf("one", "two", "three")
-        val text = text(array)
-
-        text.value shouldBe "one${nl}two${nl}three"
     }
 
     @Test
