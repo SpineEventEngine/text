@@ -26,8 +26,12 @@
 
 package io.spine.internal.dependency
 
-// https://github.com/google/auto
-object AutoValue {
-    private const val version = "1.9"
-    const val annotations = "com.google.auto.value:auto-value-annotations:${version}"
+/**
+ * Helps optimize Gradle Builds by ensuring recommendations at build time.
+ *
+ * See [plugin site](https://runningcode.github.io/gradle-doctor) for features and usage.
+ */
+object GradleDoctor {
+    const val version = "0.8.1"
+    const val pluginId = "com.osacky.doctor"
 }

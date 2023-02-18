@@ -24,9 +24,9 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-val baseVersion: String by extra("2.0.0-SNAPSHOT.112")
-val validationVersion: String by extra("2.0.0-SNAPSHOT.31")
-val javadocToolsVersion by extra("2.0.0-SNAPSHOT.74")
-val mcJavaVersion: String by extra("2.0.0-SNAPSHOT.101")
-
-val versionToPublish: String by extra("2.0.0-SNAPSHOT.2")
+/**
+ *  The version of this library.
+ *
+ *  For dependencies on Spine modules please see [io.spine.internal.dependency.Spine].
+ */
+val versionToPublish: String by extra("2.0.0-SNAPSHOT.3")

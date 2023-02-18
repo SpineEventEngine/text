@@ -30,11 +30,11 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
+import io.spine.string.Separator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 import static io.spine.text.PositionBeyondText.NOT_IN_TEXT;
 import static io.spine.util.Exceptions.newIllegalArgumentException;
-import static java.lang.System.lineSeparator;
 
 /**
  * Static factories and precondition checks for creating instances of {@link Text}.
@@ -49,8 +49,9 @@ import static java.lang.System.lineSeparator;
  */
 public final class TextFactory {
 
-    private static final Splitter SPLITTER = Splitter.on(lineSeparator());
-    private static final Joiner JOINER = Joiner.on(lineSeparator());
+    private static final String NL = Separator.INSTANCE.getNL();
+    private static final Splitter SPLITTER = Splitter.on(NL);
+    private static final Joiner JOINER = Joiner.on(NL);
     private static final Position NOT_FOUND = Position.newBuilder()
             .setBeyondText(NOT_IN_TEXT)
             .build();
@@ -74,6 +75,9 @@ public final class TextFactory {
     /**
      * Creates a new instance of text with lines separated by {@linkplain #newLine()
      * line separator}.
+     *
+     * @throws IllegalArgumentException
+     *         if one of the lines
      */
     public static Text text(Iterable<String> lines) {
         checkNotNull(lines);
@@ -83,42 +87,37 @@ public final class TextFactory {
     }
 
     /**
-     * Creates a new instance of text with lines separated by {@linkplain #newLine()
-     * line separator}.
+     * Creates a new multi-line text with the given lines.
+     *
+     * @throws IllegalArgumentException
+     *         if any of the lines contains a {@linkplain #containsSeparator(CharSequence)
+     *         line separator}
      */
-    public static Text text(String[] lines) {
+    @VisibleForTesting
+    public static Text createText(String... lines) {
         checkNotNull(lines);
         return text(ImmutableList.copyOf(lines));
     }
 
     /**
-     * Creates a new list with the given lines.
+     * Ensures that lines do not contain {@linkplain #containsSeparator(CharSequence)
+     * line separators}.
      *
      * @throws IllegalArgumentException
-     *          if any of the lines contains the {@linkplain #newLine()
-     *          line separator}
-     */
-    @VisibleForTesting
-    public static Text createText(String... lines) {
-        checkNotNull(lines);
-        return text(lines);
-    }
-
-    /**
-     * Ensures that lines do not contain {@linkplain #newLine() line separators}.
-     *
-     * @throws IllegalArgumentException
-     *          if at least one line contains a {@linkplain #newLine() line separator}
+     *         if at least one line contains a {@linkplain #containsSeparator(CharSequence)
+     *         line separator}
      */
     public static void checkNoSeparators(Iterable<String> lines) {
         lines.forEach(TextFactory::checkNoSeparator);
     }
 
     /**
-     * Ensures that charter sequence does not contain a {@linkplain #newLine() line separator}.
+     * Ensures that charter sequence does not contain a {@linkplain #containsSeparator(CharSequence)
+     * line separator}.
      *
      * @throws IllegalArgumentException
-     *          if the sequence contains a {@linkplain #newLine() line separator}
+     *         if the sequence contains a {@linkplain #containsSeparator(CharSequence)
+     *         line separator}
      */
     public static void checkNoSeparator(CharSequence line) {
         if (containsSeparator(line)) {
@@ -127,11 +126,14 @@ public final class TextFactory {
     }
 
     /**
-     * Tells if the charter sequence contains a {@linkplain #newLine()
-     * line separator}.
+     * Tells if the charter sequence contains any of the {@linkplain io.spine.string.Separator
+     * line separators}.
      */
     public static boolean containsSeparator(CharSequence s) {
-        return s.toString().contains(lineSeparator());
+        var str = s.toString();
+        return str.contains(NL)
+                || str.contains(Separator.CR)
+                || str.contains(Separator.CRLF);
     }
 
     /**
@@ -165,6 +167,6 @@ public final class TextFactory {
      * @apiNote Use this method for brevity of code related to working with lines.
      */
     public static String newLine() {
-        return lineSeparator();
+        return NL;
     }
 }

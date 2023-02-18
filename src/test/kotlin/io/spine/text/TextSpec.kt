@@ -23,14 +23,15 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
-
 package io.spine.text
 
-import com.google.common.testing.NullPointerTester
-import com.google.common.truth.Truth.assertThat
-import io.spine.testing.UtilityClassTest
-import io.spine.text.PositionBeyondText.NOT_IN_TEXT
+import io.kotest.matchers.shouldBe
+import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.text.TextFactory.createText
+import io.spine.text.TextFactory.text
+import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 
 class TextFactoryTest: UtilityClassTest<TextFactory>(
     TextFactory::class.java) {
@@ -38,32 +39,36 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
     private val nl = System.lineSeparator()
 
     @Test
-    fun `handle nulls passed to static methods`() {
-        NullPointerTester().testAllPublicStaticMethods(TextFactory::class.java)
+    fun `find substring`() {
+        val text = createText("abra", "ka", "dabra")
+
+        assertThrows<IllegalArgumentException> { text.contains("abra${nl}ka") }
+
+        text.contains("abra") shouldBe true
+        text.contains("kada") shouldBe false
     }
 
     @Test
-    fun `split text into lines`() {
-        val str = "uno${nl}dos${nl}tres"
-        val text = TextFactory.text(str)
-        assertThat(text.lines()).containsExactly("uno", "dos", "tres")
+    fun `must not accept lines with separators`() {
+        assertThrows<IllegalArgumentException> {  createText("un", "${nl}o") }
+        assertThrows<IllegalArgumentException> {  text(listOf("dos", "tres${nl}")) }
     }
 
     @Test
-    fun `join 'Iterable'`() {
-        val iterable = listOf("bir", "iki", "üç")
-        val text = TextFactory.text(iterable)
-        assertThat(text.value).isEqualTo("bir${nl}iki${nl}üç")
+    fun `always return the same value`() {
+        val text = createText("donna", "be", "la", "mare")
+
+        text.value shouldBeSameInstanceAs text.value
     }
 
-    @Test
-    fun `join an array`() {
-        val array = arrayOf("one", "two", "three")
-        val text = TextFactory.text(array)
-        assertThat(text.value).isEqualTo("one${nl}two${nl}three")
-    }
 
     @Test
+    fun `provide 'newLine()' shortcut method`() {
+        TextFactory.newLine() shouldBeSameInstanceAs nl
+    }
+}
+
+@Test
     fun `expose line joiner for outside use`() {
         assertThat(TextFactory.lineJoiner()).isNotNull()
     }
