@@ -55,8 +55,8 @@ public fun Text.prependIndent(indent: String = Indent(DEFAULT_SIZE).value): Text
 @VisibleForTesting
 internal fun nonSystemSeparators(): Iterable<String> {
     val nl = Separator.NL
-    val consts = listOf(Separator.CR, Separator.LF, Separator.CRLF)
-    val nonSystem = consts.filter { it != nl }
+    val separators = listOf(Separator.CR, Separator.LF, Separator.CRLF)
+    val nonSystem = separators.filter { it != nl }
     return nonSystem
 }
 
