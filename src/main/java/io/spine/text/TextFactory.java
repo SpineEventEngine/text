@@ -74,7 +74,7 @@ public final class TextFactory {
      * line separator}.
      *
      * @throws IllegalArgumentException
-     *          if one of the lines
+     *         if one of the lines
      */
     public static Text text(Iterable<String> lines) {
         checkNotNull(lines);
@@ -84,29 +84,16 @@ public final class TextFactory {
     }
 
     /**
-     * Creates a new instance of text with lines separated by {@linkplain #newLine()
-     * line separator}.
-     *
-     * @throws IllegalArgumentException
-     *          if any of the lines contains a {@linkplain #containsSeparator(CharSequence)
-     *          line separator}
-     */
-    public static Text text(String[] lines) {
-        checkNotNull(lines);
-        return text(ImmutableList.copyOf(lines));
-    }
-
-    /**
      * Creates a new multi-line text with the given lines.
      *
      * @throws IllegalArgumentException
-     *          if any of the lines contains a {@linkplain #containsSeparator(CharSequence)
-     *          line separator}
+     *         if any of the lines contains a {@linkplain #containsSeparator(CharSequence)
+     *         line separator}
      */
     @VisibleForTesting
     public static Text createText(String... lines) {
         checkNotNull(lines);
-        return text(lines);
+        return text(ImmutableList.copyOf(lines));
     }
 
     /**
@@ -114,8 +101,8 @@ public final class TextFactory {
      * line separators}.
      *
      * @throws IllegalArgumentException
-     *          if at least one line contains a {@linkplain #containsSeparator(CharSequence)
-     *          line separator}
+     *         if at least one line contains a {@linkplain #containsSeparator(CharSequence)
+     *         line separator}
      */
     public static void checkNoSeparators(Iterable<String> lines) {
         lines.forEach(TextFactory::checkNoSeparator);
@@ -126,8 +113,8 @@ public final class TextFactory {
      * line separator}.
      *
      * @throws IllegalArgumentException
-     *          if the sequence contains a {@linkplain #containsSeparator(CharSequence)
-     *          line separator}
+     *         if the sequence contains a {@linkplain #containsSeparator(CharSequence)
+     *         line separator}
      */
     public static void checkNoSeparator(CharSequence s) {
         if (containsSeparator(s)) {
