@@ -33,14 +33,14 @@ import com.google.common.collect.ImmutableList;
 import io.spine.string.Separator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static io.spine.text.PositionBeyondText.NOT_IN_TEXT;
+import static io.spine.text.Position.BeyondText.NOT_IN_TEXT;
 import static io.spine.util.Exceptions.newIllegalArgumentException;
 
 /**
  * Static factories and precondition checks for creating instances of {@link Text}.
  *
- * @apiNote A recommended way for using this class is using its methods statically imported,
- *         so that the creation of {@link Text} objects looks compact:
+ * @apiNote A recommended way for using this class is using its methods statically
+ *         imported, so that the creation of {@link Text} objects looks compact:
  *         <pre>{@code
  *         import io.spine.text.TextFactory.text
  *         ...
@@ -52,7 +52,9 @@ public final class TextFactory {
     private static final String NL = Separator.INSTANCE.getNL();
     private static final Splitter SPLITTER = Splitter.on(NL);
     private static final Joiner JOINER = Joiner.on(NL);
-    private static final Position NOT_FOUND = Position.newBuilder()
+
+    @VisibleForTesting
+    public static final Position NOT_FOUND = Position.newBuilder()
             .setBeyondText(NOT_IN_TEXT)
             .build();
 
@@ -90,8 +92,8 @@ public final class TextFactory {
      * Creates a new multi-line text with the given lines.
      *
      * @throws IllegalArgumentException
-     *         if any of the lines contains a {@linkplain #containsSeparator(CharSequence)
-     *         line separator}
+     *         if any of the lines contains a
+     *         {@linkplain #containsSeparator(CharSequence) line separator}
      */
     @VisibleForTesting
     public static Text createText(String... lines) {
@@ -100,24 +102,24 @@ public final class TextFactory {
     }
 
     /**
-     * Ensures that lines do not contain {@linkplain #containsSeparator(CharSequence)
-     * line separators}.
+     * Ensures that lines do not contain
+     * {@linkplain #containsSeparator(CharSequence) line separators}.
      *
      * @throws IllegalArgumentException
-     *         if at least one line contains a {@linkplain #containsSeparator(CharSequence)
-     *         line separator}
+     *         if at least one line contains a
+     *         {@linkplain #containsSeparator(CharSequence) line separator}
      */
     public static void checkNoSeparators(Iterable<String> lines) {
         lines.forEach(TextFactory::checkNoSeparator);
     }
 
     /**
-     * Ensures that charter sequence does not contain a {@linkplain #containsSeparator(CharSequence)
-     * line separator}.
+     * Ensures that charter sequence does not contain a
+     * {@linkplain #containsSeparator(CharSequence) line separator}.
      *
      * @throws IllegalArgumentException
-     *         if the sequence contains a {@linkplain #containsSeparator(CharSequence)
-     *         line separator}
+     *         if the sequence contains a
+     *         {@linkplain #containsSeparator(CharSequence) line separator}
      */
     public static void checkNoSeparator(CharSequence line) {
         if (containsSeparator(line)) {
@@ -153,9 +155,6 @@ public final class TextFactory {
 
     /**
      * Obtains the instance of {@link Position} which means "not found".
-     *
-     * <p>The {@linkplain Position#getLine() line} property of the returned instance is equal -1,
-     * and {@linkplain Position#getColumn() column} property has no meaning and is undefined.
      */
     public static Position positionNotFound() {
         return NOT_FOUND;

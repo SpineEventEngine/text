@@ -26,13 +26,17 @@
 package io.spine.text
 
 import io.kotest.matchers.shouldBe
+import io.kotest.matchers.shouldNotBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
+import io.spine.testing.UtilityClassTest
 import io.spine.text.TextFactory.createText
 import io.spine.text.TextFactory.text
+import io.spine.text.Position.BeyondText.NOT_IN_TEXT
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
 
+@DisplayName("`TextFactory` should")
 class TextFactoryTest: UtilityClassTest<TextFactory>(
     TextFactory::class.java) {
 
@@ -66,19 +70,17 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
     fun `provide 'newLine()' shortcut method`() {
         TextFactory.newLine() shouldBeSameInstanceAs nl
     }
-}
 
-@Test
+    @Test
     fun `expose line joiner for outside use`() {
-        assertThat(TextFactory.lineJoiner()).isNotNull()
+        TextFactory.lineJoiner() shouldNotBe null
     }
 
     @Test
     fun `provide 'not found' instance`() {
         val notFound = TextFactory.positionNotFound()
-        assertThat(notFound.hasLine())
-            .isFalse()
-        assertThat(notFound.beyondText)
-            .isEqualTo(NOT_IN_TEXT)
+
+        notFound.hasCursor() shouldBe false
+        notFound.beyondText shouldBe NOT_IN_TEXT
     }
 }
