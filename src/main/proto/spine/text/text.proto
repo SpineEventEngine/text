@@ -74,4 +74,3 @@ message Position {
         bool not_in_text = 2;
     }
 }
-
