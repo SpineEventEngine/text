@@ -33,7 +33,6 @@ import com.google.common.collect.ImmutableList;
 import io.spine.string.Separator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
-import static io.spine.text.Position.BeyondText.NOT_IN_TEXT;
 import static io.spine.util.Exceptions.newIllegalArgumentException;
 
 /**
@@ -55,7 +54,7 @@ public final class TextFactory {
 
     @VisibleForTesting
     public static final Position NOT_FOUND = Position.newBuilder()
-            .setBeyondText(NOT_IN_TEXT)
+            .setNotInText(true)
             .build();
 
     /**

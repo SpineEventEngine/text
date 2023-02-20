@@ -62,28 +62,16 @@ message Cursor {
 message Position {
 
     oneof marker {
-        // Position inside the text.
+
+        // Coordinates for editing operations.
         Cursor cursor = 1;
-
-        // A position beyond the existing text.
-        BeyondText beyond_text = 3;
-    }
-
-    // A position is beyond the existing text.
-    enum BeyondText {
-
-        PBT_UNDEFINED = 0;
 
         // The position is not in text.
         //
         // For example, for text lookups, this means that the query
         // substring is not in the text.
         //
-        NOT_IN_TEXT = 1;
-
-        // Points at the position after the last line of the text
-        // regardless of how long it is.
-        AFTER_TEXT = 2;
+        bool not_in_text = 2;
     }
 }
 

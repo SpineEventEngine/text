@@ -31,7 +31,6 @@ import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.testing.UtilityClassTest
 import io.spine.text.TextFactory.createText
 import io.spine.text.TextFactory.text
-import io.spine.text.Position.BeyondText.NOT_IN_TEXT
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertThrows
@@ -81,6 +80,6 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
         val notFound = TextFactory.positionNotFound()
 
         notFound.hasCursor() shouldBe false
-        notFound.beyondText shouldBe NOT_IN_TEXT
+        notFound.notInText shouldBe true
     }
 }
