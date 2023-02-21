@@ -48,9 +48,9 @@ internal class TextFactorySpec : UtilityClassTest<TextFactory>(TextFactory::clas
 
     companion object {
         val linesWithSeparators = listOf(
-            " Fiz ${Separator.LF} buz? ",
-            " Foo ${Separator.CR} bar.",
-            "Ka ${Separator.CRLF} boom!"
+            " Fiz ${Separator.LF.value} buz? ",
+            " Foo ${Separator.CR.value} bar.",
+            "Ka ${Separator.CRLF.value} boom!"
         )
     }
 
