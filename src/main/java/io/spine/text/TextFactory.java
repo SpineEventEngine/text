@@ -30,16 +30,19 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
+import io.spine.string.CharSequences;
 import io.spine.string.Separator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static io.spine.string.CharSequences.containsLineSeparators;
+import static io.spine.string.CharSequences.escapeLineSeparators;
 import static io.spine.util.Exceptions.newIllegalArgumentException;
 
 /**
  * Static factories and precondition checks for creating instances of {@link Text}.
  *
- * @apiNote A recommended way for using this class is using its methods statically imported,
- *         so that the creation of {@link Text} objects looks compact:
+ * @apiNote A recommended way for using this class is using its methods statically
+ *         imported, so that the creation of {@link Text} objects looks compact:
  *         <pre>{@code
  *         import io.spine.text.TextFactory.text
  *         ...
@@ -48,10 +51,14 @@ import static io.spine.util.Exceptions.newIllegalArgumentException;
  */
 public final class TextFactory {
 
-    private static final String NL = Separator.INSTANCE.getNL();
+    private static final String NL = Separator.nl();
     private static final Splitter SPLITTER = Splitter.on(NL);
     private static final Joiner JOINER = Joiner.on(NL);
-    private static final Position NOT_FOUND = Position.newBuilder().setLine(-1).build();
+
+    @VisibleForTesting
+    public static final Position NOT_FOUND = Position.newBuilder()
+            .setNotInText(true)
+            .build();
 
     /**
      * Prevents instantiation of this static factory class.
@@ -87,8 +94,8 @@ public final class TextFactory {
      * Creates a new multi-line text with the given lines.
      *
      * @throws IllegalArgumentException
-     *         if any of the lines contains a {@linkplain #containsSeparator(CharSequence)
-     *         line separator}
+     *         if any of the lines contains a
+     *         {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}
      */
     @VisibleForTesting
     public static Text createText(String... lines) {
@@ -97,40 +104,32 @@ public final class TextFactory {
     }
 
     /**
-     * Ensures that lines do not contain {@linkplain #containsSeparator(CharSequence)
-     * line separators}.
+     * Ensures that lines do not contain
+     * {@linkplain CharSequences#containsLineSeparators(CharSequence) line separators}.
      *
      * @throws IllegalArgumentException
-     *         if at least one line contains a {@linkplain #containsSeparator(CharSequence)
-     *         line separator}
+     *         if at least one line contains a
+     *         {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}
      */
     public static void checkNoSeparators(Iterable<String> lines) {
         lines.forEach(TextFactory::checkNoSeparator);
     }
 
     /**
-     * Ensures that charter sequence does not contain a {@linkplain #containsSeparator(CharSequence)
-     * line separator}.
+     * Ensures that charter sequence does not contain a
+     * {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}.
      *
      * @throws IllegalArgumentException
-     *         if the sequence contains a {@linkplain #containsSeparator(CharSequence)
-     *         line separator}
+     *         if the sequence contains a
+     *         {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}
      */
-    public static void checkNoSeparator(CharSequence s) {
-        if (containsSeparator(s)) {
-            throw newIllegalArgumentException("The line contains line separator: `%s`.", s);
+    public static void checkNoSeparator(CharSequence line) {
+        if (containsLineSeparators(line)) {
+            throw newIllegalArgumentException(
+                    "Unexpected line separators found in the string: `%s`.",
+                    escapeLineSeparators(line)
+            );
         }
-    }
-
-    /**
-     * Tells if the charter sequence contains any of the {@linkplain io.spine.string.Separator
-     * line separators}.
-     */
-    public static boolean containsSeparator(CharSequence s) {
-        var str = s.toString();
-        return str.contains(NL)
-                || str.contains(Separator.CR)
-                || str.contains(Separator.CRLF);
     }
 
     /**
@@ -150,9 +149,6 @@ public final class TextFactory {
 
     /**
      * Obtains the instance of {@link Position} which means "not found".
-     *
-     * <p>The {@linkplain Position#getLine() line} property of the returned instance is equal -1,
-     * and {@linkplain Position#getColumn() column} property has no meaning and is undefined.
      */
     public static Position positionNotFound() {
         return NOT_FOUND;

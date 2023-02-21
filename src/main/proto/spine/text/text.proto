@@ -40,18 +40,37 @@ message Text {
     string value = 1;
 }
 
-// A position in the text.
-message Position {
+// Coordinates inside a text.
+message Cursor {
 
-    // A zero-based index of the line of text.
+    // A zero-based index of the line in the text.
     //
-    // A value of -1 means "Not found".
+    // If add a whole line at this coordinate, the value of this field
+    // means "add text _before_ this line".
     //
-    int32 line = 1 [(min).value = "-1"];
+    int32 line = 1 [(min).value = "0"];
 
     // A zero-based position inside the [line].
     //
-    // If the [line] property equals -1 the value of the column field has no meaning.
+    // If we add text inside the line, the value of this field means
+    // "add text _after_ this colum".
     //
     int32 column = 2 [(min).value = "0"];
+}
+
+// A position in the text.
+message Position {
+
+    oneof marker {
+
+        // Coordinates for editing operations.
+        Cursor cursor = 1;
+
+        // The position is not in text.
+        //
+        // For example, for text lookups, this means that the query
+        // substring is not in the text.
+        //
+        bool not_in_text = 2;
+    }
 }

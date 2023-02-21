@@ -31,6 +31,7 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.string.Separator
 import io.spine.testing.UtilityClassTest
+import io.spine.text.TextFactory.NOT_FOUND
 import io.spine.text.TextFactory.createText
 import io.spine.text.TextFactory.newLine
 import io.spine.text.TextFactory.text
@@ -43,13 +44,13 @@ import org.junit.jupiter.api.assertThrows
 @DisplayName("`TextFactory` should")
 internal class TextFactorySpec : UtilityClassTest<TextFactory>(TextFactory::class.java) {
 
-    private val nl = Separator.NL
+    private val nl = Separator.nl()
 
     companion object {
         val linesWithSeparators = listOf(
-            " Fiz ${Separator.LF} buz? ",
-            " Foo ${Separator.CR} bar.",
-            "Ka ${Separator.CRLF} boom!"
+            " Fiz ${Separator.LF.value} buz? ",
+            " Foo ${Separator.CR.value} bar.",
+            "Ka ${Separator.CRLF.value} boom!"
         )
     }
 
@@ -109,12 +110,12 @@ internal class TextFactorySpec : UtilityClassTest<TextFactory>(TextFactory::clas
     }
 
     @Test
-    fun `provide 'not found' instance`() {
-        TextFactory.positionNotFound().line shouldBe -1
+    fun `provide shortcut method for obtaining system line separator`() {
+        newLine() shouldBe System.lineSeparator()
     }
 
     @Test
-    fun `provide shortcut method for obtaining system line separator`() {
-        newLine() shouldBe System.lineSeparator()
+    fun `provide 'not found' instance`() {
+        TextFactory.positionNotFound() shouldBe NOT_FOUND
     }
 }

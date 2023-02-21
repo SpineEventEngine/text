@@ -26,6 +26,7 @@
 
 package io.spine.text
 
+import io.spine.string.containsNonSystemLineSeparator
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.types.shouldBeSameInstanceAs
 import io.spine.string.Separator
@@ -50,17 +51,17 @@ internal class TextExtsSpec {
 
     @Test
     fun `trim indentations preserving system line separators`() {
-        text.trimIndent().value.containsNonSystemSeparators() shouldBe false
+        text.trimIndent().value.containsNonSystemLineSeparator() shouldBe false
     }
 
     @Test
     fun `prepend indentation preserving line separators`() {
-        text.prependIndent().value.containsNonSystemSeparators() shouldBe false
+        text.prependIndent().value.containsNonSystemLineSeparator() shouldBe false
     }
 
     @Test
     fun `ensure system line separators`() {
-        text.ensureSystemLineSeparators().value.containsNonSystemSeparators() shouldBe false
+        text.ensureSystemLineSeparators().value.containsNonSystemLineSeparator() shouldBe false
     }
 
     @Test
@@ -74,5 +75,5 @@ internal class TextExtsSpec {
 }
 
 private fun String.withNonSystemSeparators(): String {
-    return replace(Separator.NL, nonSystemSeparators().last())
+    return replace(Separator.nl(), Separator.nonSystem().last().value)
 }
