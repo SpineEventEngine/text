@@ -64,7 +64,6 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
         text.value shouldBeSameInstanceAs text.value
     }
 
-
     @Test
     fun `provide 'newLine()' shortcut method`() {
         TextFactory.newLine() shouldBeSameInstanceAs nl

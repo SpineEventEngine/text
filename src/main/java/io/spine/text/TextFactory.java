@@ -30,9 +30,12 @@ import com.google.common.annotations.VisibleForTesting;
 import com.google.common.base.Joiner;
 import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
+import io.spine.string.CharSequences;
 import io.spine.string.Separator;
 
 import static com.google.common.base.Preconditions.checkNotNull;
+import static io.spine.string.CharSequences.containsLineSeparators;
+import static io.spine.string.CharSequences.escapeLineSeparators;
 import static io.spine.util.Exceptions.newIllegalArgumentException;
 
 /**
@@ -48,7 +51,7 @@ import static io.spine.util.Exceptions.newIllegalArgumentException;
  */
 public final class TextFactory {
 
-    private static final String NL = Separator.INSTANCE.getNL();
+    private static final String NL = Separator.nl();
     private static final Splitter SPLITTER = Splitter.on(NL);
     private static final Joiner JOINER = Joiner.on(NL);
 
@@ -92,7 +95,7 @@ public final class TextFactory {
      *
      * @throws IllegalArgumentException
      *         if any of the lines contains a
-     *         {@linkplain #containsSeparator(CharSequence) line separator}
+     *         {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}
      */
     @VisibleForTesting
     public static Text createText(String... lines) {
@@ -102,11 +105,11 @@ public final class TextFactory {
 
     /**
      * Ensures that lines do not contain
-     * {@linkplain #containsSeparator(CharSequence) line separators}.
+     * {@linkplain CharSequences#containsLineSeparators(CharSequence) line separators}.
      *
      * @throws IllegalArgumentException
      *         if at least one line contains a
-     *         {@linkplain #containsSeparator(CharSequence) line separator}
+     *         {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}
      */
     public static void checkNoSeparators(Iterable<String> lines) {
         lines.forEach(TextFactory::checkNoSeparator);
@@ -114,27 +117,19 @@ public final class TextFactory {
 
     /**
      * Ensures that charter sequence does not contain a
-     * {@linkplain #containsSeparator(CharSequence) line separator}.
+     * {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}.
      *
      * @throws IllegalArgumentException
      *         if the sequence contains a
-     *         {@linkplain #containsSeparator(CharSequence) line separator}
+     *         {@linkplain CharSequences#containsLineSeparators(CharSequence) line separator}
      */
     public static void checkNoSeparator(CharSequence line) {
-        if (containsSeparator(line)) {
-            throw newIllegalArgumentException("The line contains line separator: `%s`.", line);
+        if (containsLineSeparators(line)) {
+            throw newIllegalArgumentException(
+                    "Unexpected line separators found in the string: `%s`.",
+                    escapeLineSeparators(line)
+            );
         }
-    }
-
-    /**
-     * Tells if the charter sequence contains any of the {@linkplain io.spine.string.Separator
-     * line separators}.
-     */
-    public static boolean containsSeparator(CharSequence s) {
-        var str = s.toString();
-        return str.contains(NL)
-                || str.contains(Separator.CR)
-                || str.contains(Separator.CRLF);
     }
 
     /**

@@ -28,10 +28,10 @@
 
 package io.spine.text
 
-import com.google.common.annotations.VisibleForTesting
 import io.spine.string.Indent
 import io.spine.string.Indent.Companion.DEFAULT_SIZE
 import io.spine.string.Separator
+import io.spine.string.containsNonSystemLineSeparator
 import io.spine.string.pi
 import io.spine.string.ti
 
@@ -50,39 +50,16 @@ public fun Text.prependIndent(indent: String = Indent(DEFAULT_SIZE).value): Text
 }
 
 /**
- * Obtains line separators different to one currently used.
- */
-@VisibleForTesting
-internal fun nonSystemSeparators(): Iterable<String> {
-    val nl = Separator.NL
-    val separators = listOf(Separator.CR, Separator.LF, Separator.CRLF)
-    val nonSystem = separators.filter { it != nl }
-    return nonSystem
-}
-
-/**
- * Tells if this string contain at least one non-system line separator.
- */
-@VisibleForTesting
-internal fun String.containsNonSystemSeparators(): Boolean {
-    val allSeparators = Regex("\\R")
-    val separators = allSeparators.findAll(this)
-    val found = separators.any { it.value != Separator.NL }
-    return found
-}
-
-/**
  * Ensures that the text does not contain non-system line separators.
  *
  * If this text does not contain such separators, the same instance is returned.
  * Otherwise, new instance is created with the required line separators.
  */
 public fun Text.ensureSystemLineSeparators(): Text {
-    if (!value.containsNonSystemSeparators()) {
+    if (!value.containsNonSystemLineSeparator()) {
         return this
     }
-    val rejoined = value.lines().joinToString(separator = Separator.NL)
+    val rejoined = value.lines().joinToString(separator = Separator.nl())
     return text { value = rejoined }
 }
-
 
