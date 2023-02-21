@@ -44,7 +44,7 @@ import org.junit.jupiter.api.assertThrows
 @DisplayName("`TextFactory` should")
 internal class TextFactorySpec : UtilityClassTest<TextFactory>(TextFactory::class.java) {
 
-    private val nl = Separator.NL
+    private val nl = Separator.nl()
 
     companion object {
         val linesWithSeparators = listOf(
