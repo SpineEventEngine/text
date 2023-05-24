@@ -157,7 +157,6 @@ kotlin {
 }
 
 protobuf {
-//    generatedFilesBaseDir = "$projectDir/generated"
     generateProtoTasks {
         all().forEach { task ->
             task.plugins {
