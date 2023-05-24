@@ -11,7 +11,7 @@
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.16.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.flogger. **Name** : flogger. **Version** : 0.7.4.
@@ -147,19 +147,19 @@
      * **Project URL:** [https://github.com/google/gson/gson](https://github.com/google/gson/gson)
      * **License:** [Apache-2.0](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.16.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotation. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.16.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.16.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_check_api. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.16.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_core. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
-1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.16.
+1.  **Group** : com.google.errorprone. **Name** : error_prone_type_annotations. **Version** : 2.18.0.
      * **License:** [Apache 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : com.google.errorprone. **Name** : javac. **Version** : 9+181-r4173-1.
@@ -357,23 +357,23 @@
      * **Project URL:** [https://github.com/grpc/grpc-java](https://github.com/grpc/grpc-java)
      * **License:** [Apache 2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.5.5.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.5.5.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api. **Version** : 5.6.1.**No license information found**
+1.  **Group** : io.kotest. **Name** : kotest-assertions-api-jvm. **Version** : 5.6.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.5.5.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.5.5.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core. **Version** : 5.6.1.**No license information found**
+1.  **Group** : io.kotest. **Name** : kotest-assertions-core-jvm. **Version** : 5.6.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.5.5.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.5.5.
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared. **Version** : 5.6.1.**No license information found**
+1.  **Group** : io.kotest. **Name** : kotest-assertions-shared-jvm. **Version** : 5.6.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
-1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.5.5.**No license information found**
-1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.5.5.
+1.  **Group** : io.kotest. **Name** : kotest-common. **Version** : 5.6.1.**No license information found**
+1.  **Group** : io.kotest. **Name** : kotest-common-jvm. **Version** : 5.6.1.
      * **Project URL:** [https://github.com/kotest/kotest](https://github.com/kotest/kotest)
      * **License:** [Apache-2.0](https://opensource.org/licenses/Apache-2.0)
 
@@ -384,6 +384,10 @@
 1.  **Group** : javax.annotation. **Name** : javax.annotation-api. **Version** : 1.3.2.
      * **Project URL:** [http://jcp.org/en/jsr/detail?id=250](http://jcp.org/en/jsr/detail?id=250)
      * **License:** [CDDL + GPLv2 with classpath exception](https://github.com/javaee/javax.annotation/blob/master/LICENSE)
+
+1.  **Group** : javax.inject. **Name** : javax.inject. **Version** : 1.
+     * **Project URL:** [http://code.google.com/p/atinject/](http://code.google.com/p/atinject/)
+     * **License:** [The Apache Software License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0.txt)
 
 1.  **Group** : junit. **Name** : junit. **Version** : 4.13.1.
      * **Project URL:** [http://junit.org](http://junit.org)
@@ -443,7 +447,7 @@
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
      * **License:** [The MIT License](http://opensource.org/licenses/MIT)
 
-1.  **Group** : org.checkerframework. **Name** : dataflow-errorprone. **Version** : 3.24.0.
+1.  **Group** : org.checkerframework. **Name** : dataflow-errorprone. **Version** : 3.27.0.
      * **Project URL:** [https://checkerframework.org](https://checkerframework.org)
      * **License:** [GNU General Public License, version 2 (GPL2), with the classpath exception](http://www.gnu.org/software/classpath/license.html)
 
@@ -627,24 +631,24 @@
      * **Project URL:** [https://jsoup.org/](https://jsoup.org/)
      * **License:** [The MIT License](https://jsoup.org/license)
 
-1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.9.2.**No license information found**
-1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-api. **Version** : 5.9.2.
+1.  **Group** : org.junit. **Name** : junit-bom. **Version** : 5.9.3.**No license information found**
+1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-api. **Version** : 5.9.3.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
 
-1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-engine. **Version** : 5.9.2.
+1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-engine. **Version** : 5.9.3.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
 
-1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-params. **Version** : 5.9.2.
+1.  **Group** : org.junit.jupiter. **Name** : junit-jupiter-params. **Version** : 5.9.3.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
 
-1.  **Group** : org.junit.platform. **Name** : junit-platform-commons. **Version** : 1.9.2.
+1.  **Group** : org.junit.platform. **Name** : junit-platform-commons. **Version** : 1.9.3.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
 
-1.  **Group** : org.junit.platform. **Name** : junit-platform-engine. **Version** : 1.9.2.
+1.  **Group** : org.junit.platform. **Name** : junit-platform-engine. **Version** : 1.9.3.
      * **Project URL:** [https://junit.org/junit5/](https://junit.org/junit5/)
      * **License:** [Eclipse Public License v2.0](https://www.eclipse.org/legal/epl-v20.html)
 
@@ -702,4 +706,4 @@
 
 The dependencies distributed under several licenses, are used according their commercial-use-friendly license.
 
-This report was generated on **Wed May 24 14:16:01 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
+This report was generated on **Wed May 24 14:55:10 EEST 2023** using [Gradle-License-Report plugin](https://github.com/jk1/Gradle-License-Report) by Evgeny Naumenko, licensed under [Apache 2.0 License](https://github.com/jk1/Gradle-License-Report/blob/master/LICENSE).
