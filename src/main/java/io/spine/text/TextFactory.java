@@ -59,11 +59,6 @@ public final class TextFactory {
     private static final String NL = Separator.nl();
     private static final Joiner JOINER = Joiner.on(NL);
 
-    @VisibleForTesting
-    public static final Position NOT_FOUND = Position.newBuilder()
-            .setNotInText(true)
-            .build();
-
     /**
      * Prevents instantiation of this static factory class.
      */
@@ -149,13 +144,6 @@ public final class TextFactory {
      */
     public static Splitter lineSplitter() {
         return SPLITTER;
-    }
-
-    /**
-     * Obtains the instance of {@link Position} which means "not found".
-     */
-    public static Position positionNotFound() {
-        return NOT_FOUND;
     }
 
     /**

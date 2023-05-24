@@ -73,12 +73,4 @@ class TextFactoryTest: UtilityClassTest<TextFactory>(
     fun `expose line joiner for outside use`() {
         TextFactory.lineJoiner() shouldNotBe null
     }
-
-    @Test
-    fun `provide 'not found' instance`() {
-        val notFound = TextFactory.positionNotFound()
-
-        notFound.hasCursor() shouldBe false
-        notFound.notInText shouldBe true
-    }
 }

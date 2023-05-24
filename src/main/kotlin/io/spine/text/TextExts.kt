@@ -29,7 +29,7 @@
 package io.spine.text
 
 import io.spine.string.Indent
-import io.spine.string.Indent.Companion.DEFAULT_SIZE
+import io.spine.string.Indent.Companion.DEFAULT_JAVA_INDENT_SIZE
 import io.spine.string.Separator
 import io.spine.string.containsNonSystemLineSeparator
 import io.spine.string.pi
@@ -42,10 +42,12 @@ public fun Text.trimIndent(): Text = text {
     value = this@trimIndent.value.ti()
 }
 
+private val DEFAULT_INDENT = Indent(DEFAULT_JAVA_INDENT_SIZE).value
+
 /**
  * Prepends indentation of this text, preserving system line separators.
  */
-public fun Text.prependIndent(indent: String = Indent(DEFAULT_SIZE).value): Text = text {
+public fun Text.prependIndent(indent: String = DEFAULT_INDENT): Text = text {
     value = this@prependIndent.value.pi(indent)
 }
 
