@@ -75,7 +75,6 @@ plugins {
 
 apply(from = "$projectDir/version.gradle.kts")
 val versionToPublish: String by extra
-val spine = Spine(project)
 
 group = "io.spine"
 version = versionToPublish
@@ -98,9 +97,9 @@ configurations {
         resolutionStrategy {
             force(
                 JUnit.runner,
-                spine.base,
-                spine.toolBase,
-                spine.validation.runtime,
+                Spine.base,
+                Spine.toolBase,
+                Spine.validation.runtime,
             )
         }
     }
@@ -109,11 +108,11 @@ configurations {
 dependencies {
     errorprone(ErrorProne.core)
 
-    implementation(spine.base)
-    implementation(spine.validation.runtime)
+    implementation(Spine.base)
+    implementation(Spine.validation.runtime)
 
     testImplementation(JUnit.runner)
-    testImplementation(spine.testlib)
+    testImplementation(Spine.testlib)
     testImplementation(Kotest.assertions)
 }
 
@@ -156,7 +155,7 @@ kotlin {
 }
 
 protobuf {
-    generatedFilesBaseDir = "$projectDir/generated"
+//    generatedFilesBaseDir = "$projectDir/generated"
     generateProtoTasks {
         all().forEach { task ->
             task.plugins {
@@ -166,7 +165,7 @@ protobuf {
     }
 }
 
-val javadocToolsVersion = Spine.DefaultVersion.javadocTools
+val javadocToolsVersion = Spine.ArtifactVersion.javadocTools
 updateGitHubPages(javadocToolsVersion) {
     allowInternalJavadoc.set(true)
     rootFolder.set(rootDir)
