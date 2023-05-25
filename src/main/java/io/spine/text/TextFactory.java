@@ -33,6 +33,8 @@ import com.google.common.collect.ImmutableList;
 import io.spine.string.CharSequences;
 import io.spine.string.Separator;
 
+import java.util.regex.Pattern;
+
 import static com.google.common.base.Preconditions.checkNotNull;
 import static io.spine.string.CharSequences.containsLineSeparators;
 import static io.spine.string.CharSequences.escapeLineSeparators;
@@ -51,14 +53,11 @@ import static io.spine.util.Exceptions.newIllegalArgumentException;
  */
 public final class TextFactory {
 
+    @SuppressWarnings("HardcodedLineSeparator") // For use in a regex.
+    private static final Pattern newLinePattern = Pattern.compile("\n|(\r\n)|\r");
+    private static final Splitter SPLITTER = Splitter.on(newLinePattern);
     private static final String NL = Separator.nl();
-    private static final Splitter SPLITTER = Splitter.on(NL);
     private static final Joiner JOINER = Joiner.on(NL);
-
-    @VisibleForTesting
-    public static final Position NOT_FOUND = Position.newBuilder()
-            .setNotInText(true)
-            .build();
 
     /**
      * Prevents instantiation of this static factory class.
@@ -145,13 +144,6 @@ public final class TextFactory {
      */
     public static Splitter lineSplitter() {
         return SPLITTER;
-    }
-
-    /**
-     * Obtains the instance of {@link Position} which means "not found".
-     */
-    public static Position positionNotFound() {
-        return NOT_FOUND;
     }
 
     /**

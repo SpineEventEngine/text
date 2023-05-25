@@ -24,44 +24,46 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-@file:JvmName("Texts")
+import java.io.File
+import org.gradle.kotlin.dsl.getValue
+import org.gradle.kotlin.dsl.getting
+import org.gradle.kotlin.dsl.jacoco
+import org.gradle.testing.jacoco.tasks.JacocoReport
 
-package io.spine.text
-
-import io.spine.string.Indent
-import io.spine.string.Indent.Companion.DEFAULT_JAVA_INDENT_SIZE
-import io.spine.string.Separator
-import io.spine.string.containsNonSystemLineSeparator
-import io.spine.string.pi
-import io.spine.string.ti
-
-/**
- * Trims indentation in this text, preserving system line separators.
- */
-public fun Text.trimIndent(): Text = text {
-    value = this@trimIndent.value.ti()
-}
-
-private val DEFAULT_INDENT = Indent(DEFAULT_JAVA_INDENT_SIZE).value
-
-/**
- * Prepends indentation of this text, preserving system line separators.
- */
-public fun Text.prependIndent(indent: String = DEFAULT_INDENT): Text = text {
-    value = this@prependIndent.value.pi(indent)
+plugins {
+    jacoco
 }
 
 /**
- * Ensures that the text does not contain non-system line separators.
+ * Configures [JacocoReport] task to run in a Kotlin KMM project for `commonMain` and `jvmMain`
+ * source sets.
  *
- * If this text does not contain such separators, the same instance is returned.
- * Otherwise, new instance is created with the required line separators.
+ * This script plugin must be applied using the following construct at the end of
+ * a `build.gradle.kts` file of a module:
+ *
+ * ```kotlin
+ * apply(plugin="jacoco-kmm-jvm")
+ * ```
+ * Please do not apply this script plugin in the `plugins {}` block because `jacocoTestReport`
+ * task is not yet available at this stage.
  */
-public fun Text.ensureSystemLineSeparators(): Text {
-    if (!value.containsNonSystemLineSeparator()) {
-        return this
-    }
-    val rejoined = value.lines().joinToString(separator = Separator.nl())
-    return text { value = rejoined }
-}
+private val about = ""
 
+/**
+ * Configure Jacoco task with custom input from this KMM project.
+ */
+val jacocoTestReport: JacocoReport by tasks.getting(JacocoReport::class) {
+
+    val classFiles = File("${buildDir}/classes/kotlin/jvm/")
+        .walkBottomUp()
+        .toSet()
+    classDirectories.setFrom(classFiles)
+
+    val coverageSourceDirs = arrayOf(
+        "src/commonMain",
+        "src/jvmMain"
+    )
+    sourceDirectories.setFrom(files(coverageSourceDirs))
+
+    executionData.setFrom(files("${buildDir}/jacoco/jvmTest.exec"))
+}

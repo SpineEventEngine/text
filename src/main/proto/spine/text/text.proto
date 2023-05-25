@@ -34,6 +34,8 @@ option java_multiple_files = true;
 option java_package = "io.spine.text";
 option java_outer_classname = "TextProto";
 
+import "google/protobuf/empty.proto";
+
 // A multi-line text.
 message Text {
     option (is).java_type = "TextMixin";
@@ -58,19 +60,28 @@ message Cursor {
     int32 column = 2 [(min).value = "0"];
 }
 
-// A position in the text.
-message Position {
+// A pointer to a place in a text file.
+message TextCoordinates {
 
-    oneof marker {
+    oneof kind {
+        option (is_required) = true;
 
-        // Coordinates for editing operations.
-        Cursor cursor = 1;
+        // Points at specific line and column.
+        Cursor inline = 1 [(validate) = true];
 
-        // The position is not in text.
+        // Points at the start of a specific line.
+        uint32 whole_line = 2;
+
+        // Points at the position after the last line of the text.
         //
-        // For example, for text lookups, this means that the query
-        // substring is not in the text.
+        // In other terms, this point is the place where the text can be appended.
         //
-        bool not_in_text = 2;
+        // The associated column number is always zero, since there can be no existing chars in
+        // the line yet.
+        //
+        google.protobuf.Empty end_of_text = 3;
+
+        // Specifies that there is no such place in a given file.
+        google.protobuf.Empty nowhere = 4;
     }
 }

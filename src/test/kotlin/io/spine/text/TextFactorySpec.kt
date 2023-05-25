@@ -31,7 +31,6 @@ import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
 import io.spine.string.Separator
 import io.spine.testing.UtilityClassTest
-import io.spine.text.TextFactory.NOT_FOUND
 import io.spine.text.TextFactory.createText
 import io.spine.text.TextFactory.newLine
 import io.spine.text.TextFactory.text
@@ -97,6 +96,26 @@ internal class TextFactorySpec : UtilityClassTest<TextFactory>(TextFactory::clas
     }
 
     @Test
+    fun `split literals into lines`() {
+        val str = """
+           foo
+            bar
+            baxxx
+        """.trimIndent()
+        val text = text(str)
+
+        text.lines() shouldContainInOrder listOf("foo", " bar", " baxxx")
+    }
+
+    @Test
+    fun `split text with mixed separators into lines`() {
+        val str = "1\r2\r\n3\r4"
+        val text = text(str)
+
+        text.lines() shouldContainInOrder listOf("1", "2", "3", "4")
+    }
+
+    @Test
     fun `join 'Iterable'`() {
         val iterable = listOf("bir", "iki", "üç")
         val text = text(iterable)
@@ -112,10 +131,5 @@ internal class TextFactorySpec : UtilityClassTest<TextFactory>(TextFactory::clas
     @Test
     fun `provide shortcut method for obtaining system line separator`() {
         newLine() shouldBe System.lineSeparator()
-    }
-
-    @Test
-    fun `provide 'not found' instance`() {
-        TextFactory.positionNotFound() shouldBe NOT_FOUND
     }
 }

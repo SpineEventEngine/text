@@ -1,5 +1,5 @@
 /*
- * Copyright 2022, TeamDev. All rights reserved.
+ * Copyright 2023, TeamDev. All rights reserved.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -24,13 +24,22 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package io.spine.internal.gradle.github.pages
+import io.spine.internal.dependency.Protobuf
+import io.spine.internal.gradle.protobuf.setup
 
-/**
- * Names of branches involved when updating documentation.
- */
-object Branch {
+plugins {
+    id("java-library")
+    id("com.google.protobuf")
+}
 
-    /** The branch to use when pushing the updates to the documentation. */
-    const val ghPages = "gh-pages"
+
+// For generating test fixtures. See `src/test/proto`.
+protobuf {
+    configurations.excludeProtobufLite()
+    protoc {
+        artifact = Protobuf.compiler
+    }
+    generateProtoTasks.all().configureEach {
+        setup()
+    }
 }
