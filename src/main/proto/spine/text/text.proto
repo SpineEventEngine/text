@@ -72,7 +72,7 @@ message TextCoordinates {
         // Points at the start of a specific line.
         uint32 whole_line = 2;
 
-        // Points at the point after the last line of the text.
+        // Points at the position after the last line of the text.
         //
         // In other terms, this point is the place where the text can be appended.
         //
