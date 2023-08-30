@@ -34,8 +34,6 @@ import io.spine.internal.dependency.Spine
 import io.spine.internal.dependency.Validation
 import io.spine.internal.gradle.VersionWriter
 import io.spine.internal.gradle.checkstyle.CheckStyleConfig
-import io.spine.internal.gradle.excludeProtobufLite
-import io.spine.internal.gradle.forceVersions
 import io.spine.internal.gradle.github.pages.updateGitHubPages
 import io.spine.internal.gradle.javac.configureErrorProne
 import io.spine.internal.gradle.javac.configureJavac
@@ -100,6 +98,8 @@ configurations {
                 JUnit.runner,
                 Spine.base,
                 Spine.toolBase,
+                Spine.Logging.lib,
+                Spine.Logging.backend,
                 Validation.runtime,
                 Kotest.assertions
             )
@@ -125,7 +125,8 @@ spinePublishing {
         PublishingRepos.cloudArtifactRegistry
     )
     dokkaJar {
-        enabled = true
+        java = true
+        kotlin = true
     }
 }
 
@@ -191,7 +192,7 @@ tasks {
 configureTaskDependencies()
 
 project.afterEvaluate {
-    @Suppress("UNUSED_VARIABLE") val sourcesJar: Task by tasks.getting {
+    val sourcesJar: Task by tasks.getting {
         (this as Jar).duplicatesStrategy = INCLUDE
     }
 }
